@@ -21,7 +21,7 @@ func main() {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	var savestring [1000]string
+	var savestring [100]string
 	for idx, line := range lines {
 		println("Hex:", line)
 		d := new(big.Int)
@@ -44,16 +44,11 @@ func main() {
 	defer f.Close()
 	writer := bufio.NewWriter(f)
 	 for _,line := range savestring{
-		 writer.WriteString(line)		 
-		 writer.WriteString("\n")
+		 if line != "" {
+			writer.WriteString(line)		 
+			writer.WriteString("\n")			 
+		 }
+		 
 	}
-	writer.WriteString("haha")
 	writer.Flush() 
 }
-
-func checkFileIsExist(filename string) bool {
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
-	   return false
-	}
-	return true
- }
